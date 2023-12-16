@@ -1,0 +1,37 @@
+﻿@model PhotoZoneBooking.BLL.Dtos.LoginDto
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="w-full pt-64 min-h-screen">
+    <div class="container mx-auto justify-content-center">
+        <form asp-action="Login" method="post" class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto">
+            <div class="mb4">
+                <span class="text-danger text-md">@ViewBag.ErrorMessage</span>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" asp-for="Email"></label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" asp-for="Password"></label>
+                <input type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" asp-for="Password" class="form-control"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="flex items-center justify-between">
+                <button
+                    class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit">
+                    Sign In
+                </button>
+                <a
+                    class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                    asp-controller="Auth" asp-action="ForgotPassword">
+                    Forgot Password?
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

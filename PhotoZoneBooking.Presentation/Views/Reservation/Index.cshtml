@@ -1,0 +1,101 @@
+﻿@model IEnumerable<PhotoZoneBooking.BLL.Dtos.ReservationDto>
+
+<div class="min-h-screen pt-36">
+    <div class="container mx-auto overflow-x-auto sm:rounded-lg">
+        <div class="grid grid-cols-5 shadow-md rounded p-6 mb-4 items-center gap-y-20">
+            <div class="grid grid-cols-1 col-span-1">
+                <a asp-controller="Auth" asp-action="EditProfile" class="w-48 rounded text-center text-white bg-amber-500 px-2 py-1 mb-2">
+                    Edit profile
+                </a>
+                <a asp-controller="Auth" asp-action="ChangePassword" class="w-48 rounded text-center text-white bg-green-600 px-3 mb-2 py-1">
+                    Change password
+                </a>
+                <a asp-controller="Auth" asp-action="DeleteProfile" class="w-48 rounded text-center text-white bg-red-600 px-3 py-1">
+                    Delete account
+                </a>
+            </div>
+            <div class="grid grid-cols-1 text-left col-span-4 bg-gray-700 p-5 rounded-xl">
+                <div class="text-white text-3xl mb-4">First name: @ViewBag.User.FirstName</div>
+                <div class="text-white text-3xl">Last name: @ViewBag.User.LastName</div>
+            </div>
+            <div class="col-span-5 bg-black h-0.5"></div>
+            <div class="text-black text-2xl mb-2">My reservations: </div>
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 col-span-4">
+                <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Id
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Title
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        PhotoZoneId
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        StartTime
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        EndTime
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        TotalPrice
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var element in Model)
+                {
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 text-black whitespace-nowrap">
+                            @element.Id
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 text-black whitespace-nowrap">
+                            @element.Title
+                        </th>
+                        <td class="px-6 py-4 text-black">
+                            @element.PhotoZoneId
+                        </td>
+                        <td class="px-6 py-4 text-black">
+                            @element.Start
+                        </td>
+                        <td class="px-6 py-4 text-black">
+                            @element.End
+                        </td>
+                        <td class="px-6 py-4 text-black">
+                            @Math.Round(element.Total, 2)$
+                        </td>
+                        <td class="py-4 text-white">
+                            @if (element.Status == "Pending")
+                            {
+                                <a asp-controller="Reservation" asp-action="PayReservation" asp-route-id="@element.Id" class="rounded bg-green-600 px-3 py-1 mr-2">
+                                    Pay
+                                </a>
+                                <a asp-controller="Reservation" asp-action="UpdateReservation" asp-route-id="@element.Id" class="rounded bg-amber-600 px-3 py-1 mr-2">
+                                    Update
+                                </a>
+                                <a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-id="@element.Id" class="rounded bg-red-600 px-3 py-1">
+                                    Delete
+                                </a>
+                            }
+                            else if(element.Start > DateTime.Now)
+                            {
+                                <a asp-controller="Reservation" asp-action="CancelReservation" asp-route-reservationId="@element.Id" class="rounded bg-red-600 px-3 py-1">
+                                    Cancel reservation
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="h-auto">
+
+    </div>
+</div>
+

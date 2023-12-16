@@ -1,0 +1,64 @@
+﻿@model PhotoZoneBooking.BLL.Dtos.ReservationDto
+
+<script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'listWeek',
+            header: {
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            },
+            displayEventTime: true,
+            eventTimeFormat: { 
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }
+        });
+        axios.get("https://photozonebooking.azurewebsites.net/reservation/getphotozonereservations?photoZoneId=@Model.PhotoZoneId")
+             .then(response => {
+                   response.data.forEach(t => calendar.addEvent({
+                        title: t.title, 
+                        start: t.start,
+                        end: t.end,
+                        color: '#378006'
+                   }));
+             });
+        calendar.render();
+      });
+</script>
+
+<div class="container mx-auto pt-36 min-h-screen grid grid-cols-2">
+    <div id="calendar"></div>
+    <form asp-route-id="@Model.Id" asp-route-photoZoneId="@Model.PhotoZoneId" class="w-1/2 mx-auto text-center mt-5 rounded bg-slate-500 px-3 py-2" method="post" asp-action="UpdateReservation">
+        <div class="mb-4 text-white font-semibold text-3xl">Update reservation</div>
+        <div>
+            <input hidden value="@Model.Total" class="bg-gray-600 form-control shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" asp-for="Total"/>
+        </div>
+        <div class="mb-4">
+            <label class="block text-white text-sm font-bold mb-2" asp-for="Title"></label>
+            <input placeholder="Title" class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" asp-for="Title" class="form-control"/>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="mb-4">
+            <label class="block text-white text-sm font-bold mb-2" asp-for="Start"></label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" asp-for="Start" class="form-control"/>
+            <span asp-validation-for="Start" class="text-danger"></span>
+            <span class="text-danger">@ViewBag.ErrorMessage</span>
+        </div>
+        <div class="mb-4">
+            <label class="block text-white text-sm font-bold mb-2" asp-for="End"></label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" asp-for="End" class="form-control"/>
+            <span asp-validation-for="End" class="text-danger"></span>
+            <span class="text-danger">@ViewBag.ErrorMessage</span>
+        </div>
+        <button
+            class="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit">
+            Update
+        </button>
+    </form>
+</div>

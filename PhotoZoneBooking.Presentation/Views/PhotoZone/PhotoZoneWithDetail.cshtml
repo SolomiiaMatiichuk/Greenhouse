@@ -1,0 +1,92 @@
+﻿@model PhotoZoneDto
+@using PhotoZoneBooking.BLL.Dtos
+
+@{
+    var isAuthenticated = User?.Identity?.IsAuthenticated;
+    var searchedReservations = ViewBag.SearchedReservations as IEnumerable<ReservationDto>;
+}
+
+<script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'listWeek',
+            header: {
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            },
+            displayEventTime: true,
+            eventTimeFormat: { 
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }
+        });
+        axios.get("https://photozonebooking.azurewebsites.net/reservation/getphotozonereservations?photoZoneId=@Model.Id")
+             .then(response => {
+                   response.data.forEach(t => calendar.addEvent({
+                        title: t.title, 
+                        start: t.start,
+                        end: t.end,
+                        color: '#378006'
+                   }));
+             });
+        calendar.render();
+      });
+</script>
+
+<div class="grid grid-cols-2 gap-20 container mx-auto pt-36 min-h-screen">
+    <div>
+        @if (isAuthenticated == true)
+        {
+            <div class="mb-4">
+                <a class="text-white bg-gray-500 px-3 py-2 rounded" asp-controller="Reservation" asp-action="PostReservation" asp-route-photoZoneId="@Model.Id">
+                    Create reservation
+                </a>
+            </div>
+        }
+        <div class="grid grid-cols-1 mb-3">
+            <form asp-route-id="@Model.Id" asp-controller="PhotoZone" asp-action="PhotoZoneWithDetail" method="get">
+                <div class="grid grid-cols-10 items-center mb-3">
+                    <input class="col-span-8 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Title" name="query"/>
+                    <button class="col-span-2 text-white bg-gray-500 px-3 py-2 rounded" type="submit">Search</button>
+                </div>
+                @if (searchedReservations is not null)
+                {
+                    <div class="text-white bg-blue-500 p-3 font-bold">Found reservations:</div>
+                    @foreach (var element in searchedReservations)
+                    {
+                        <div class="p-1 mb-1 drop-shadow-lg text-black bg-white grid grid-cols-9">
+                            <div class="col-span-1"><strong>Id:</strong> @element.Id</div>
+                            <div class="col-span-2"><strong>Title:</strong> @element.Title</div>
+                            <div class="col-span-3"><strong>Start:</strong> @element.Start</div>
+                            <div class="col-span-3"><strong>End:</strong> @element.End</div>
+                        </div>
+                    }
+                }
+            </form>
+        </div>
+        <div class="bg-gray-300 rounded p-2" id="calendar"></div>
+    </div>
+    <div class="block p-3 h-5/6">
+        <img class="rounded mx-auto" alt="Image" src="@Model.ImageUrl"/>
+        <div class="text-black text-2xl text-center font-semibold my-3">@Model.Title</div>
+        <div class="bg-black h-0.5 mb-3"></div>
+        <div class="text-black text-lg text-center">@Model.Description</div>
+        <div class="bg-black h-0.5 my-3"></div>
+        <div class="text-black">
+            Adress: @Model.Address
+        </div>
+        <div class="text-black">
+            Worktime start: @Model.StartProgram AM
+        </div>
+        <div class="text-black">
+            Worktime end: @Model.EndProgram AM
+        </div>
+        <div class="rounded-lg text-gray uppercase mt-5 py-2 px-3 text-2xl text-center font-bold bg-gray-400">
+            Price per hour: @Model.PricePerHour$
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@using System.Security.Claims
+@using PhotoZoneBooking.BLL.Dtos
+@model IEnumerable<PhotoZoneBooking.BLL.Dtos.PhotoZoneDto>
+
+@{
+    ViewData["Title"] = "Photo zones";
+    var isAuthenticated = User?.Identity?.IsAuthenticated;
+    var isAdmin = false;
+    var userEmail = String.Empty;
+    
+    if (isAuthenticated == true)
+    {
+        userEmail = User?.Claims?.SingleOrDefault(t => t.Type.Equals(ClaimTypes.Email))?.Value;
+        isAdmin = User.IsInRole("admin");
+    }
+}
+
+<div class="container mx-auto w-full mt-24 mb-5 relative text-center">
+    <img class="mx-auto mb-2" alt="Image" src="https://media.istockphoto.com/id/1329185317/uk/%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%BD%D1%96-%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F/%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9-%D1%82%D1%83%D0%BC%D0%B0%D0%BD-%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D1%96-%D0%BC%D1%96%D1%81%D1%82%D0%B5%D1%80%D1%96%D1%97-%D0%B4%D0%B5%D1%80%D0%B5%D0%B2-%D0%B3%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%B9-%D0%B1%D0%B5%D0%B7%D1%88%D0%BE%D0%B2%D0%BD%D0%B8%D0%B9-%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD.jpg?s=2048x2048&w=is&k=20&c=5nBsEf1lGFzraYb688VWa8blpqtE02AM1IAlPjOpkZY="/>
+    <div class="text-black text-5xl font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        Available photo zones
+    </div>
+</div>
+
+<div class="container mx-auto min-h-screen">
+    @if (isAdmin)
+    {
+        <div class="block mb-5">
+            <a asp-controller="PhotoZone" asp-action="PostPhotoZone" class="w-80 bg-gray-500 text-white text-md rounded drop-shadow-lg px-4 py-2">Add photo zone</a>
+        </div>
+    }
+    <div class="grid grid-cols-4 gap-10">
+        @foreach (var element in Model)
+        {
+            <div class="drop-shadow-lg rounded grid grid-cols-1">
+                <img alt="Image" src="@element.ImageUrl"/>
+                <div class="bg-gray-500 p-3 grid grid-cols-1">
+                    @if (isAuthenticated == true && isAdmin)
+                    {
+                        <div class="text-white text-md font-regular">Id: @element.Id</div>
+                    }
+                    <a class="text-white text-3xl mb-3 font-semibold" asp-controller="PhotoZone" asp-action="PhotoZoneWithDetail" asp-route-id="@element.Id">@element.Title</a>
+                    <div class="text-white text-lg mb-3">Schedule: @element.StartProgram to @element.EndProgram</div>
+                    <div class="text-white text-md mb-3">Price per hour: @element.PricePerHour</div>
+                    @if (isAdmin)
+                    {
+                        <div class="inline-block">
+                            <a class="bg-red-600 text-white px-3 py-1 rounded drop-shadow-xl mr-2" asp-controller="PhotoZone" asp-action="DeletePhotoZone" asp-route-id="@element.Id">
+                                Delete
+                            </a>
+                            <a class="bg-amber-600 text-white px-3 py-1 rounded drop-shadow-xl" asp-controller="PhotoZone" asp-action="UpdatePhotoZone" asp-route-id="@element.Id">
+                                Update
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
