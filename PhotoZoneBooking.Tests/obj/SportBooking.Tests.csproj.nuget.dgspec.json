@@ -1,0 +1,109 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\пі\\our_git\\Sport_Booking\\SportBooking.Tests\\SportBooking.Tests.csproj": {}
+  },
+  "projects": {
+    "D:\\пі\\our_git\\Sport_Booking\\SportBooking.DAL\\PhotoZoneBooking.DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\пі\\our_git\\Sport_Booking\\SportBooking.DAL\\PhotoZoneBooking.DAL.csproj",
+        "projectName": "PhotoZoneBooking.DAL",
+        "projectPath": "D:\\пі\\our_git\\Sport_Booking\\SportBooking.DAL\\PhotoZoneBooking.DAL.csproj",
+        "packagesPath": "C:\\Users\\solom\\.nuget\\packages\\",
+        "outputPath": "D:\\пі\\our_git\\Sport_Booking\\SportBooking.DAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\solom\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\пі\\our_git\\Sport_Booking\\SportBooking.Tests\\SportBooking.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\пі\\our_git\\Sport_Booking\\SportBooking.Tests\\SportBooking.Tests.csproj",
+        "projectName": "SportBooking.Tests",
+        "projectPath": "D:\\пі\\our_git\\Sport_Booking\\SportBooking.Tests\\SportBooking.Tests.csproj",
+        "packagesPath": "C:\\Users\\solom\\.nuget\\packages\\",
+        "outputPath": "D:\\пі\\our_git\\Sport_Booking\\SportBooking.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\solom\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\пі\\our_git\\Sport_Booking\\SportBooking.BLL\\SportBooking.BLL.csproj": {
+                "projectPath": "D:\\пі\\our_git\\Sport_Booking\\SportBooking.BLL\\SportBooking.BLL.csproj"
+              },
+              "D:\\пі\\our_git\\Sport_Booking\\SportBooking.DAL\\PhotoZoneBooking.DAL.csproj": {
+                "projectPath": "D:\\пі\\our_git\\Sport_Booking\\SportBooking.DAL\\PhotoZoneBooking.DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
